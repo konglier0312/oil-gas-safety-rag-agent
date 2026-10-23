@@ -4,7 +4,12 @@ from typing import Any
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
-from rag_core import CHAT_HISTORY_LIMIT, extract_agent_answer, load_rag_components
+from rag_core import (
+    CHAT_HISTORY_LIMIT,
+    COLLECTION_NAME,
+    extract_agent_answer,
+    load_rag_components,
+)
 
 
 app = FastAPI(
@@ -54,7 +59,7 @@ def health():
     return {
         "status": "ok",
         "components_loaded": is_loaded,
-        "collection": "oil_gas_safety_agent_v1",
+        "collection": COLLECTION_NAME,
     }
 
 
@@ -112,3 +117,4 @@ def clear_program_cache():
         "milvus_index_deleted": False,
         "message": "程序内存中的 Agent 和连接缓存已清除；Milvus 持久索引仍保留。",
     }
+
