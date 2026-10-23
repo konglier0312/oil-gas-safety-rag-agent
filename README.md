@@ -20,7 +20,7 @@
 
 ```powershell
 python -m venv .venv
-\.venv\Scripts\Activate.ps1
+.\.venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt
 Copy-Item .env.example .env
 ```
@@ -64,5 +64,6 @@ python -m streamlit run rag_web.py
 
 - 当前只针对单本 PDF 做练习，未包含 OCR、用户权限或持久化会话存储。
 - 向量集合名和 Milvus 地址在代码中配置；需要调整时修改 `rag_core.py`。
-- 检索效果取决于文档质量、切分方式和相关度阈值，仍需用问题集持续评估。
+- 新版本使用独立的 COSINE 集合 `oil_gas_safety_agent_v3`，首次运行会重新生成并写入向量；旧集合不会被删除。
+- 检索效果取决于文档质量、切分方式和相关度阈值；当前阈值是偏严格的初始值，仍需用问题集评估和校准。
 
