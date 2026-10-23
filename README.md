@@ -66,4 +66,8 @@ python -m streamlit run rag_web.py
 - 向量集合名和 Milvus 地址在代码中配置；需要调整时修改 `rag_core.py`。
 - 新版本使用独立的 COSINE 集合 `oil_gas_safety_agent_v3`，首次运行会重新生成并写入向量；旧集合不会被删除。
 - 检索效果取决于文档质量、切分方式和相关度阈值；当前阈值是偏严格的初始值，仍需用问题集评估和校准。
+- ## 📸 效果展示
+<img width="906" height="829" alt="image" src="https://github.com/user-attachments/assets/99289ab7-eec4-4085-9413-9fe7eaf52f47" />
+<img width="844" height="826" alt="image" src="https://github.com/user-attachments/assets/e8b0ce67-87be-4e69-898d-e46d49436bed" />
+
 
