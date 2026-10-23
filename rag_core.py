@@ -20,12 +20,11 @@ BASE_DIR = Path(__file__).resolve().parent
 PDF_PATH = BASE_DIR / "oil_gas_safety.pdf"
 ENV_PATH = BASE_DIR / ".env"
 MILVUS_URI = "http://localhost:19530"
-# 使用新集合，重建时保留旧索引，方便回退。
-COLLECTION_NAME = "oil_gas_safety_agent_v2"
+# 新版本使用 COSINE；新集合名可避免误用旧的 L2 索引。旧集合会保留。
+COLLECTION_NAME = "oil_gas_safety_agent_v3"
 EMBED_MODEL_NAME = "BAAI/bge-m3"
 CHAT_HISTORY_LIMIT = 12  # 最近12条消息，约等于最近6轮问答
-# Milvus 的 COSINE 相关度会规范化到 0~1；低于此分数的候选不送给 Agent。
-# 这是当前项目偏严格的初始门槛，后续可根据实际问答样例调整。
+# COSINE 相关度映射到 0~1；该门槛是偏严格的初始值，需用问答样例校准。
 MIN_VECTOR_RELEVANCE_SCORE = 0.88
 
 
@@ -263,6 +262,11 @@ def load_rag_components():
             collection_name=COLLECTION_NAME,
             connection_args={"uri": MILVUS_URI},
             auto_id=False,
+            index_params={
+                "metric_type": "COSINE",
+                "index_type": "AUTOINDEX",
+                "params": {},
+            },
         )
         index_status = "已创建新索引并写入资料"
 
